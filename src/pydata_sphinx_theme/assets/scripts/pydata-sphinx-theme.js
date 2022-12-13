@@ -396,18 +396,50 @@ function initRTDObserver() {
   observer.observe(document.body, config);
 }
 
-function testScroll() {
-  var header = document.getElementsByClassName('header');
-  var docsHeader = document.getElementById('docs-header')
+const getScrollTop = () => {
+  return window.pageYOffset;
+}
+
+function headerScroll() {
+  const docsHeader = document.getElementById('docs-header');
+  const headerLogo = document.getElementById('docs-header-logo');
+
+  const minHeaderHeight = 16;
+  const maxHeaderHeight = 50;
+
+  const minHeaderLogoWidth = 100;
+  const maxHeaderLogoWidth = 118;
+
+  const baseScrollTop = 0;
+
   document.onscroll = function () {
-    if (scrollY > 0) {
-      docsHeader.style.animation = 'docsHeaderDown 1s forwards ';
-      header[0].style.animation = 'headDown 1s forwards ';
+    const scrollTop = getScrollTop();
+    const offsetScroll = Math.abs(scrollTop - baseScrollTop);
+
+    if (scrollTop < baseScrollTop) {
+      docsHeader.style.height = `${maxHeaderHeight}px`;
+      headerLogo.style.width = `${maxHeaderLogoWidth}px`;
     } else {
-      header[0].style.animation = 'headUp 1s forwards ';
-      docsHeader.style.animation = 'docsHeaderUp 1s forwards ';
+      const headerHeight = (maxHeaderHeight - offsetScroll) > minHeaderHeight ? (maxHeaderHeight - offsetScroll) : minHeaderHeight;
+      const headerLogoWidth = (maxHeaderLogoWidth - offsetScroll) > minHeaderLogoWidth ? (maxHeaderLogoWidth - offsetScroll) : minHeaderLogoWidth;
+      docsHeader.style.height = `${headerHeight}px`;
+      headerLogo.style.width = `${headerLogoWidth}px`;
     }
+
+    setContainerTop();
   }
+}
+
+function setContainerTop() {
+  const navBar = document.getElementById('navbar-main');
+  const headerAnnouncement = document.getElementById('header-announcement');
+
+  const navBarHeight = navBar.getBoundingClientRect().height;
+  const headerAnnouncementHeight = headerAnnouncement ? headerAnnouncement.getBoundingClientRect().height : 0;
+
+  const container = document.getElementById('bd-container');
+
+  container.style.marginTop = `${navBarHeight - headerAnnouncementHeight}px`;
 }
 
 function switchLanguage() {
@@ -416,22 +448,30 @@ function switchLanguage() {
 }
 
 function handleSwitchLanguage() {
-  const languageSwtichBtn = document.getElementById('custom-language-switch-btn');
   const href = window.location.href;
   if (href.includes('/en/')) {
     // -> 中文模式
     window.location.href = href.replace('/en/', '/zh_CN/');
-    languageSwtichBtn.innerHTML =
-      `<strong>中</strong>
-      /
-      <span style="font-weight: 300">En</span>`;
   } else if (href.includes('/zh_CN/')) {
     // -> 英文模式
     window.location.href = href.replace('/zh_CN/', '/en/');
+  }
+}
+
+function addLanguageListener() {
+  const href = window.location.href;
+  const languageSwtichBtn = document.getElementById('custom-language-switch-btn');
+
+  if (href.includes('/en/')) {
     languageSwtichBtn.innerHTML =
-    `<span style="font-weight: 300">中</span>
+      `<span style="font-weight: 300">中</span>
+  /
+  <strong>En</strong>`;
+  } else if (href.includes('/zh_CN/')) {
+    languageSwtichBtn.innerHTML =
+      `<strong>中</strong>
     /
-    <strong>En</strong>`;
+    <span style="font-weight: 300">En</span>`;
   }
 }
 
@@ -445,4 +485,6 @@ documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 documentReady(switchLanguage);
-// documentReady(testScroll);
+documentReady(addLanguageListener);
+documentReady(setContainerTop);
+documentReady(headerScroll);

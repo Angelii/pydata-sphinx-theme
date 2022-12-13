@@ -71,7 +71,7 @@ or not theme_secondary_sidebar_items %}
   <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main">
     <nav class="docs-header" id="docs-header">
       <div class="docs-header_left-info">
-        <div class="docs-header-logo">
+        <div class="docs-header-logo" id="docs-header-logo">
           <img src="https://gw.alipayobjects.com/mdn/rms_fa88dd/afts/img/A*jbJwQJ8kjv8AAAAAAAAAAAAAARQnAQ">
         </div>
         <ul class="docs-header-list">
@@ -130,9 +130,6 @@ or not theme_secondary_sidebar_items %}
       </div>
       <div class="docs-header__github-info">
         <button type="button" id="custom-language-switch-btn" class="btn btn-light btn-sm custom-language-switch-btn">
-          <strong>中</strong>
-          /
-          <span style="font-weight: 300">En</span>
         </button>
         <iframe
           src="https://img.shields.io/github/forks/secretflow/secretflow?color=EFF5FF&label=Fork&labelColor=rgba(#000000,.65)"
@@ -147,7 +144,7 @@ or not theme_secondary_sidebar_items %}
     {%- include "sections/header.html" %}
   </nav>
   {% endblock docs_navbar %}
-  <div class="bd-container">
+  <div class="bd-container" id="bd-container">
     <div class="bd-container__inner bd-page-width">
       {# Primary sidebar #}
       <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
