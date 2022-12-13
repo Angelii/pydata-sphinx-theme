@@ -15,9 +15,125 @@
 
   min-height: var(--pst-header-height);
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0;
   max-width: 100vw;
   justify-content: center;
+  flex-direction: column;
+
+  a.nav-link {
+    color: var(--pst-color-text-muted);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--pst-color-primary);
+    }
+
+    &:focus {
+      color: var(--pst-color-primary);
+    }
+  }
+
+  .docs-header {
+    display: flex;
+    width: 1200px;
+    align-items: center;
+    margin: 16px auto;
+    height: 50px;
+    justify-content: space-between;
+
+    .docs-header_left-info {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .docs-header-logo {
+      width: 118px;
+      height: 32px;
+      margin-right: 70px;
+    }
+
+    .docs-header-list {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      .docs-header__dropdown-menu {
+        background: var(--pst-color-on-background) !important;
+        box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
+        z-index: 100000;
+        border: none;
+        border-radius: 0;
+        left: 40px !important;
+
+        .dropdown-item:hover {
+          background-color: var(--pst-color-hover);
+        }
+
+        a.nav-link {
+          color: var(--pst-color-text-muted);
+          text-decoration: none;
+
+          &:hover {
+            color: var(--pst-color-text-muted);
+          }
+
+          &:focus {
+            color: var(--pst-color-text-muted);
+          }
+        }
+      }
+
+      .docs-header-item-wrapper {
+        position: relative;
+
+        .docs-header-item {
+          font-weight: 400;
+          margin: 0 40px;
+          cursor: pointer;
+
+          &:hover:after {
+            content: '';
+            position: absolute;
+            border-bottom: 2px solid #1890ff;
+            bottom: 10px;
+            right: 34px;
+            left: 34px;
+            bottom: -10px;
+          }
+        }
+
+        .docs-header-item--active:after {
+          content: '';
+          position: absolute;
+          border-bottom: 2px solid #1890ff;
+          bottom: 10px;
+          right: 34px;
+          left: 34px;
+          bottom: -10px;
+        }
+      }
+    }
+
+    .docs-header__github-info {
+      display: flex;
+      align-items: center;
+
+      .custom-language-switch-btn {
+        background-color: transparent;
+        margin-right: 20px;
+        color: var(--pst-color-text-muted);
+        border: 1px solid var(--pst-color-text-muted);
+      }
+
+      .docs-header__github-logo {
+        height: 24px;
+      }
+    }
+  }
+
   .bd-header__inner {
     display: flex;
     align-items: center;
@@ -29,6 +145,7 @@
   // Hide the header items on mobile
   .navbar-header-items {
     display: none;
+
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       display: flex;
       flex-grow: 1;
@@ -80,7 +197,7 @@
       }
     }
 
-    > .active > .nav-link {
+    >.active>.nav-link {
       font-weight: 600;
       color: var(--pst-color-primary);
     }
@@ -118,7 +235,7 @@
   }
 }
 
-.toc-entry > .nav-link.active {
+.toc-entry>.nav-link.active {
   font-weight: 600;
   color: var(--pst-color-primary);
   background-color: transparent;
@@ -150,6 +267,7 @@
  */
 // Hide the header items on mobile
 .bd-header {
+
   // Toggle labels
   label {
     &.sidebar-toggle {
@@ -163,6 +281,7 @@
 
     &.primary-toggle {
       padding-right: 1rem;
+
       @include media-breakpoint-up($breakpoint-sidebar-primary) {
         display: none;
       }
@@ -170,6 +289,7 @@
 
     &.secondary-toggle {
       padding-left: 1rem;
+
       @include media-breakpoint-up($breakpoint-sidebar-secondary) {
         display: none;
       }
@@ -179,6 +299,7 @@
   // Hide the navbar header items on mobile because they're in the sidebar
   .navbar-header-items {
     display: none;
+
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       display: inherit;
     }
@@ -188,6 +309,7 @@
 // THe elements next to the hamburger menu only show on narrow screens
 .navbar-persistent--mobile {
   margin-left: auto;
+
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
     display: none;
   }
@@ -196,6 +318,7 @@
 // The navbar-persistent content should only show on wide screens
 .navbar-persistent--container {
   display: none;
+
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
     display: flex;
   }

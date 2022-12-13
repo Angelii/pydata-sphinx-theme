@@ -143,6 +143,7 @@ function scrollToActive() {
     // Otherwise, calculate a position to scroll to based on the lowest `active` link
     var sidebarNav = document.getElementById("bd-docs-nav");
     var active_pages = sidebarNav.querySelectorAll(".active");
+
     if (active_pages.length > 0) {
       // Use the last active page as the offset since it's the page we're on
       var latest_active = active_pages[active_pages.length - 1];
@@ -395,6 +396,45 @@ function initRTDObserver() {
   observer.observe(document.body, config);
 }
 
+function testScroll() {
+  var header = document.getElementsByClassName('header');
+  var docsHeader = document.getElementById('docs-header')
+  document.onscroll = function () {
+    if (scrollY > 0) {
+      docsHeader.style.animation = 'docsHeaderDown 1s forwards ';
+      header[0].style.animation = 'headDown 1s forwards ';
+    } else {
+      header[0].style.animation = 'headUp 1s forwards ';
+      docsHeader.style.animation = 'docsHeaderUp 1s forwards ';
+    }
+  }
+}
+
+function switchLanguage() {
+  const languageSwtichBtn = document.getElementById('custom-language-switch-btn');
+  languageSwtichBtn.addEventListener('click', handleSwitchLanguage);
+}
+
+function handleSwitchLanguage() {
+  const languageSwtichBtn = document.getElementById('custom-language-switch-btn');
+  const href = window.location.href;
+  if (href.includes('/en/')) {
+    // -> 中文模式
+    window.location.href = href.replace('/en/', '/zh_CN/');
+    languageSwtichBtn.innerHTML =
+      `<strong>中</strong>
+      /
+      <span style="font-weight: 300">En</span>`;
+  } else if (href.includes('/zh_CN/')) {
+    // -> 英文模式
+    window.location.href = href.replace('/zh_CN/', '/en/');
+    languageSwtichBtn.innerHTML =
+    `<span style="font-weight: 300">中</span>
+    /
+    <strong>En</strong>`;
+  }
+}
+
 /*******************************************************************************
  * Call functions after document loading.
  */
@@ -404,3 +444,5 @@ documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
+documentReady(switchLanguage);
+// documentReady(testScroll);

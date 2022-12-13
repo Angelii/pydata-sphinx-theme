@@ -11,56 +11,51 @@ includehidden=True,
 titles_only=True)
 -%}
 {% if sidebar_nav_html | length == 0 %}
-  {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
+{% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
 {% endif %}
 {# Remove the page-toc from secondary sidebar if there are no links to show #}
 {% if generate_toc_html() | length == 0 %}
-  {% set theme_secondary_sidebar_items = theme_secondary_sidebar_items | reject("in", "page-toc.html") | list %}
+{% set theme_secondary_sidebar_items = theme_secondary_sidebar_items | reject("in", "page-toc.html") | list %}
 {% endif %}
 {# A flag for whether we include a secondary sidebar based on the page metadata #}
 {% set remove_sidebar_secondary = (meta is defined and meta is not none
 and 'html_theme.sidebar_secondary.remove' in meta)
 or not theme_secondary_sidebar_items %}
 {%- block css %}
-  {# The data-cfasync attribute disables CloudFlare's Rocket loader so that #}
-  {# mode/theme are correctly set before the browser renders the page. #}
-  {# https://github.com/pydata/pydata-sphinx-theme/pull/1045 #}
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "{{ default_mode }}";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
-  </script>
-  {{ _webpack.head_pre_assets() }}
-  {{ _webpack.head_pre_icons() }}
-  {{- css() }}
-  {{ _webpack.head_js_preload() }}
+{# The data-cfasync attribute disables CloudFlare's Rocket loader so that #}
+{# mode/theme are correctly set before the browser renders the page. #}
+{# https://github.com/pydata/pydata-sphinx-theme/pull/1045 #}
+<script data-cfasync="false">
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "{{ default_mode }}";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+</script>
+{{ _webpack.head_pre_assets() }}
+{{ _webpack.head_pre_icons() }}
+{{- css() }}
+{{ _webpack.head_js_preload() }}
 {%- endblock css %}
 {%- block extrahead %}
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="{{ language }}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="{{ language }}" />
 {%- endblock extrahead %}
 {% block body_tag %}
-  {# set up with scrollspy to update the toc as we scroll #}
-  {# ref: https://getbootstrap.com/docs/4.0/components/scrollspy/ #}
-  <body data-bs-spy="scroll" data-bs-target="#bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="{{ default_mode }}">
+{# set up with scrollspy to update the toc as we scroll #}
+{# ref: https://getbootstrap.com/docs/4.0/components/scrollspy/ #}
+
+<body data-bs-spy="scroll" data-bs-target="#bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%"
+  data-default-mode="{{ default_mode }}">
 
   {# A button hidden by default to help assistive devices quickly jump to main content #}
   {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
   <a class="skip-link" href="#main-content">{{ _("Skip to main content") }}</a>
 
-{%- endblock %}
-
-{%- block content %}
+  {%- endblock %}
+  {%- block content %}
   {# checkbox to toggle primary sidebar #}
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary" />
   <label class="overlay overlay-primary" for="__primary"></label>
   {# Checkboxes to toggle the secondary sidebar #}
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary" />
   <label class="overlay overlay-secondary" for="__secondary"></label>
   {# A search field pop-up that will only show when the search button is clicked #}
   <div class="search-button__wrapper">
@@ -68,15 +63,89 @@ or not theme_secondary_sidebar_items %}
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
   {%- if theme_announcement -%}
-    <div class="bd-header-announcement container-fluid"
-          id="header-announcement">
-      {% include "sections/announcement.html" %}
-    </div>
+  <div class="bd-header-announcement container-fluid" id="header-announcement">
+    {% include "sections/announcement.html" %}
+  </div>
   {%- endif %}
   {% block docs_navbar %}
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main">
-      {%- include "sections/header.html" %}
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main">
+    <nav class="docs-header" id="docs-header">
+      <div class="docs-header_left-info">
+        <div class="docs-header-logo">
+          <img src="https://gw.alipayobjects.com/mdn/rms_fa88dd/afts/img/A*jbJwQJ8kjv8AAAAAAAAAAAAAARQnAQ">
+        </div>
+        <ul class="docs-header-list">
+          <div class="docs-header-item-wrapper">
+            <li class="docs-header-item">
+              <a class="nav-link" href="https://secretflow-portal-pre.alipay.com" />
+              首页
+              </a>
+            </li>
+          </div>
+          <div class="docs-header-item-wrapper">
+            <div class="dropdown">
+              <li class="docs-header-item docs-header-item--active" data-bs-toggle="dropdown">
+                文档
+              </li>
+              <ul class="dropdown-menu docs-header__dropdown-menu">
+                <li>
+                  <button class="dropdown-item" type="button">
+                    <a class="nav-link" href="https://secretflow-portal-pre.alipay.com/secretflow/">
+                      Secretflow
+                    </a>
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item" type="button">
+                    <a class="nav-link" href="https://secretflow-portal-pre.alipay.com/spu/">
+                      SPU
+                    </a>
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item" type="button">
+                    <a class="nav-link" href="https://secretflow-portal-pre.alipay.com/heu/">
+                      HEU
+                    </a>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="docs-header-item-wrapper">
+            <li class="docs-header-item">
+              <a class="nav-link" href="https://secretflow-portal-pre.alipay.com/product">
+                体验
+              </a>
+            </li>
+          </div>
+          <div class="docs-header-item-wrapper">
+            <li class="docs-header-item">
+              <a class="nav-link" href="https://www.yuque.com/secret-flow/admin">
+                博客
+              </a>
+            </li>
+          </div>
+        </ul>
+      </div>
+      <div class="docs-header__github-info">
+        <button type="button" id="custom-language-switch-btn" class="btn btn-light btn-sm custom-language-switch-btn">
+          <strong>中</strong>
+          /
+          <span style="font-weight: 300">En</span>
+        </button>
+        <iframe
+          src="https://img.shields.io/github/forks/secretflow/secretflow?color=EFF5FF&label=Fork&labelColor=rgba(#000000,.65)"
+          frameborder="0" scrolling="0" width="80" height="20" title="GitHub"></iframe>
+        <iframe
+          src="https://img.shields.io/github/stars/secretflow/secretflow?color=EFF5FF&label=Star&labelColor=rgba(#000000,.65)"
+          frameborder="0" scrolling="0" width="80" height="20" title="GitHub"></iframe>
+        <img class="docs-header__github-logo"
+          src="https://gw.alipayobjects.com/mdn/rms_fa88dd/afts/img/A*SOxMSIulcDEAAAAAAAAAAAAAARQnAQ">
+      </div>
     </nav>
+    {%- include "sections/header.html" %}
+  </nav>
   {% endblock docs_navbar %}
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
@@ -87,48 +156,136 @@ or not theme_secondary_sidebar_items %}
       <main id="main-content" class="bd-main">
         {# Main content area #}
         {% block docs_main %}
-          <div class="bd-content">
-            <div class="bd-article-container">
-              {# Article header #}
-              <div class="bd-header-article">{% include "sections/header-article.html" %}</div>
-              {# Article content #}
-              {% block docs_body %}
-                <article class="bd-article" role="main">
-                  {% block body %}{% endblock %}
-                </article>
-              {% endblock docs_body %}
-              {# Article Footer #}
-              {% if theme_show_prev_next %}
-                <footer class="bd-footer-article">
-                  {% include "sections/footer-article.html" %}
-                </footer>
-              {% endif %}
-            </div>
-            {# Secondary sidebar #}
-            {% block docs_toc %}
-              {% if not remove_sidebar_secondary %}
-                <div class="bd-sidebar-secondary bd-toc">{% include "sections/sidebar-secondary.html" %}</div>
-              {% endif %}
-            {% endblock docs_toc %}
+        <div class="bd-content">
+          <div class="bd-article-container">
+            {# Article header #}
+            <div class="bd-header-article">{% include "sections/header-article.html" %}</div>
+            {# Article content #}
+            {% block docs_body %}
+            <article class="bd-article" role="main">
+              {% block body %}{% endblock %}
+            </article>
+            {% endblock docs_body %}
+            {# Article Footer #}
+            {% if theme_show_prev_next %}
+            <footer class="bd-footer-article">
+              {% include "sections/footer-article.html" %}
+            </footer>
+            {% endif %}
           </div>
-          <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">{% include "sections/footer-content.html" %}</div>
-          </footer>
+          {# Secondary sidebar #}
+          {% block docs_toc %}
+          {% if not remove_sidebar_secondary %}
+          <div class="bd-sidebar-secondary bd-toc">{% include "sections/sidebar-secondary.html" %}</div>
+          {% endif %}
+          {% endblock docs_toc %}
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">{% include "sections/footer-content.html" %}</div>
+        </footer>
         {% endblock docs_main %}
       </main>
     </div>
   </div>
   {# Scripts placed at the end of the page to cut down on time to first content #}
   {%- block scripts_end %}{{ _webpack.body_post() }}{%- endblock scripts_end %}
-{%- endblock content %}
-{# Footer #}
-{%- block footer %}
+  {%- endblock content %}
+  {# Footer #}
+  {%- block footer %}
   <footer class="bd-footer">
     {%- include "sections/footer.html" %}
   </footer>
-{%- endblock footer %}
-{# Silence the sidebars and relbars since we define our own #}
-{% block header %}{% endblock %}
-{% block relbar1 %}{% endblock %}
-{% block relbar2 %}{% endblock %}
-{% block sidebarsourcelink %}{% endblock %}
+  <div class="footer">
+    <div class="footerContent" id="footerPage">
+      <div class="footerNav">
+        <div class="navContent">
+          <a class="footerNavTitle" target="_blank">
+            资料
+          </a>
+          <div>
+            <a href='https://www.yuque.com/secret-flow/admin' class="footerNavLink" target="_blank">
+              <span class="footerNavLinkIcon">隐语·语雀</span>
+            </a>
+            <span class="footerDivider">|</span>
+            <a href='https://secretflow.readthedocs.io/en/latest/' class="footerNavLink" target="_blank">
+              <span class="footerNavLinkIcon">隐语·开发者文档</span>
+            </a>
+          </div>
+        </div>
+        <div class="navContent">
+          <a class="footerNavTitle" target="_blank">
+            关注
+          </a>
+          <div class="gzhDiv">
+            <a href='javascript:;' class="footerNavLink" id="gzhfooter">
+              <span class="icons">
+                <img src="https://mdn.alipayobjects.com/huamei_usjdcg/afts/img/A*m-aDQK-4KJIAAAAAAAAAAAAADo6HAQ/original" />
+              </span>
+              <span class="footerNavLinkIcon">公众号</span>
+              <div class="gzh">
+                <div class="antPopoverArrow"><span class="antPopoveArrowContent"></span></div>
+                <img src="https://gw.alipayobjects.com/mdn/rms_fa88dd/afts/img/A*Sd8cS5H0PHEAAAAAAAAAAAAAARQnAQ" />
+              </div>
+            </a>
+
+            <span class="footerDivider">|</span>
+            <a href='https://space.bilibili.com/2073575923' class="footerNavLink" target="_blank">
+              <span class="icons">
+                <img src="https://mdn.alipayobjects.com/huamei_usjdcg/afts/img/A*qhw0QJVJvEoAAAAAAAAAAAAADo6HAQ/original" />
+              </span>
+              <span class="footerNavLinkIcon">B站</span>
+            </a>
+            <span class="footerDivider">|</span>
+            <a href='https://github.com/secretflow' class="footerNavLink" target="_blank">
+              <span class="icons">
+                <img src="https://mdn.alipayobjects.com/huamei_usjdcg/afts/img/A*jkP3RprvCKsAAAAAAAAAAAAADo6HAQ/original" />
+              </span>
+              <span class="footerNavLinkIcon">社区</span>
+            </a>
+          </div>
+        </div>
+        <div class="navContent">
+          <a class="footerNavTitle" target="_blank">
+            帮助
+          </a>
+          <div>
+            <a href='https://github.com/secretflow' class="footerNavLink" target="_blank">
+              <span class="footerNavLinkIcon">GitHub</span>
+            </a>
+            <span class="footerDivider">|</span>
+            <a href='https://github.com/secretflow/secretflow/discussions' class="footerNavLink" target="_blank">
+              <span class="footerNavLinkIcon">讨论区</span>
+            </a>
+            <span class="footerDivider">|</span>
+            <a href='mailto:secretflow-contact@service.alipay.com' class="footerNavLink" target="_blank">
+              <span class="footerNavLinkIcon">发邮件 secretflow-contact@service.alipay.com</span>
+            </a>
+          </div>
+        </div>
+        <div class="navContent">
+          <a class="footerNavTitle" target="_blank">
+            备案
+          </a>
+          <div>
+            <a href='https://beian.miit.gov.cn/' class="footerNavLink" target="_blank">
+              <span class="footerNavLinkIcon">京ICP备15032932号-38</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footerAside">
+        <img src="https://gw.alipayobjects.com/mdn/rms_fa88dd/afts/img/A*2ZZ_SpOtJqYAAAAAAAAAAAAAARQnAQ"
+          class="asideListImage" />
+        <div class="asideListImageText">
+          添加隐语小助手好友
+        </div>
+        <div class="asideListImageText">加入隐私计算交流群</div>
+      </div>
+    </div>
+  </div>
+  {%- endblock footer %}
+  {# Silence the sidebars and relbars since we define our own #}
+  {% block header %}{% endblock %}
+  {% block relbar1 %}{% endblock %}
+  {% block relbar2 %}{% endblock %}
+  {% block sidebarsourcelink %}{% endblock %}
