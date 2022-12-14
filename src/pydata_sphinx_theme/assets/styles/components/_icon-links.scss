@@ -2,7 +2,7 @@
  * Icon links in the navbar
  */
 
-#navbar-icon-links {
+ #navbar-icon-links {
   i {
     &.fa-brands,
     &.fa-regular,
@@ -50,5 +50,13 @@
     a {
       padding: 0rem 0.5rem;
     }
+  }
+
+  .custom-language-switch-btn {
+    background-color: transparent;
+    margin-right: 10px;
+    padding: 1px 5px;
+    color: var(--pst-color-text-muted);
+    border: 1px solid var(--pst-color-text-muted);
   }
 }

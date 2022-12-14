@@ -467,11 +467,21 @@ function addLanguageListener() {
       `<span style="font-weight: 300">中</span>
   /
   <strong>En</strong>`;
-  } else if (href.includes('/zh_CN/')) {
+  } else {
     languageSwtichBtn.innerHTML =
       `<strong>中</strong>
     /
     <span style="font-weight: 300">En</span>`;
+  }
+}
+
+function initNavHref() {
+  const navLinks = document.getElementsByClassName('nav-link');
+  for (let i = 0; i < navLinks.length; i++) {
+    if (navLinks[i].getAttribute('value')) {
+      const path = navLinks[i].getAttribute('value');
+      navLinks[i].href = window.location.origin + path;
+    }
   }
 }
 
@@ -488,3 +498,4 @@ documentReady(switchLanguage);
 documentReady(addLanguageListener);
 documentReady(setContainerTop);
 documentReady(headerScroll);
+documentReady(initNavHref);

@@ -1,7 +1,10 @@
 footer.bd-footer {
   width: 100%;
   border-top: 1px solid var(--pst-color-border);
-  padding: 10px;
+
+  .bd-footer__inner {
+    padding: 10px;
+  }
 
   .footer-item p {
     margin-bottom: 0;

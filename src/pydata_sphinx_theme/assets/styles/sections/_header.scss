@@ -121,16 +121,56 @@
       display: flex;
       align-items: center;
 
-      .custom-language-switch-btn {
-        background-color: transparent;
-        margin-right: 20px;
-        color: var(--pst-color-text-muted);
-        border: 1px solid var(--pst-color-text-muted);
-      }
-
       .docs-header__github-logo {
         height: 24px;
       }
+
+      .navbar-icon-links {
+        i {
+          &.fa-brands,
+          &.fa-regular,
+          &.fa-solid {
+            vertical-align: middle;
+            font-style: normal;
+            font-size: 26px;
+          }
+        }
+
+        img.icon-link-image {
+          height: 1.5em;
+          border-radius: 0.2rem;
+        }
+
+        li:first-child a {
+          padding-left: 0;
+        }
+
+        a span {
+          display: flex;
+          align-items: center;
+        }
+
+        // inline the element in the navbar as long as they fit and use display block when collapsing
+        // One breakpoint less than $breakpoint-sidebar-primary.
+        // See variables/_layout.scss for more info.
+        @include media-breakpoint-down(lg) {
+          flex-direction: row;
+
+          // Use Bootstrap padding for these nav links to get the spacing right
+          a {
+            padding: 0rem 0.5rem;
+          }
+        }
+
+        .custom-language-switch-btn {
+          background-color: transparent;
+          margin-right: 10px;
+          padding: 1px 5px;
+          color: var(--pst-color-text-muted);
+          border: 1px solid var(--pst-color-text-muted);
+        }
+      }
+
     }
   }
 
